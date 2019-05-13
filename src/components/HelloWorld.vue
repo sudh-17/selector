@@ -96,7 +96,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .wrapper {
   .content-container {
     position: relative;
@@ -261,6 +261,7 @@ export default {
     position: absolute;
     top: 0;
     left: 0;
+    z-index: 998;
     display: none;
   }
 }
