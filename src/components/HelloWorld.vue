@@ -5,66 +5,15 @@
       <option value="22">22</option>
       <option value="22">22fffs</option>
     </select>
-    <div class="wrapper">
-      <div class="contents" @click="focus">fgggffs</div>
-      <div class="panel">
-        <div class="panel-header">
-          <input type="text" name="search">
-        </div>
-        <div class="panel-content">
-          <ul class="panel-list">
-            <li class="panel-item">
-              <span>12231345</span>
-              <input class="check" type="checkbox" name="" id="">
-            </li>
-            <li class="panel-item">
-              <span>12231345</span>
-              <input class="check" type="checkbox" name="" id="">
-            </li>
-            <li class="panel-item">
-              <span>12231345</span>
-              <input class="check" type="checkbox" name="" id="">
-            </li>
-            <li class="panel-item">
-              <span>12231345</span>
-              <input class="check" type="checkbox" name="" id="">
-            </li>
-            <li class="panel-item">
-              <span>12231345</span>
-              <input class="check" type="checkbox" name="" id="">
-            </li>
-            <li class="panel-item">122222</li>
-            <li class="panel-item">122222</li>
-            <li class="panel-item">122222</li>
-            <li class="panel-item">122222</li>
-            <li class="panel-item">122222</li>
-            <li class="panel-item">122222</li>
-            <li class="panel-item">122222</li>
-            <li class="panel-item">122222</li>
-            <li class="panel-item">122222</li>
-            <li class="panel-item">122222</li>
-            <li class="panel-item">122222</li>
-            <li class="panel-item">122222</li>
-            <li class="panel-item">122222</li>
-            <li class="panel-item">122222</li>
-            <li class="panel-item">122222</li>
-            <li class="panel-item">122222</li>
-            <li class="panel-item">122222</li>
-            <li class="panel-item">122222</li>
-          </ul>
-        </div>
-        <div class="panel-footer">
-          <div class="bt-gb"><button class="cancel" @click="handleCancel">取消</button></div>
-          <div class="bt-gb"><button class="ok" @click="handleOk">确定</button></div>
-        </div>
-      </div>
-      <div class="backdrop"></div>
+    <div id="select">
     </div>
   </div>
 </template>
 
 <script>
 import Model from '../model.js'
+import Selector from '../selector.js'
+
 const data = [
   {
     "key": "C76Be67E-ccae-EcBC-7Fd5-B7e12C1d18E1",
@@ -105,6 +54,18 @@ const data = [
   {
     "key": "AcfEfFea-cD6D-Dac8-B8BB-Fde8fd38DC4B",
     "value": "钱杰"
+  },
+  {
+    "key": "E2EdCD8a-dd56-A76C-F42B-D55a16F037F7",
+    "value": "魏杰8"
+  },
+  {
+    "key": "A77Bdd1E-CDE5-54bA-96c5-130e14FaBc8F",
+    "value": "郭芳6"
+  },
+  {
+    "key": "AcfEfFea-cD6D-Dac8-B8B0-Fde8fd38DC4B",
+    "value": "钱杰44"
   }
 ];
 export default {
@@ -115,37 +76,27 @@ export default {
   data () {
     return {
       list: data,
-      Model
+      Model,
+      Selector,
+      select: null
     }
   },
   mounted () {
-
+    this.initSelect()
+    this.select.initData()
+    // this.select.initAction()
   },
   methods: {
-    show() {
-      document.querySelector('.panel').style.display = 'block'
-      document.querySelector('.backdrop').style.display = 'block'
-    },
-    hide(){
-      document.querySelector('.panel').style.display = 'none'
-      document.querySelector('.backdrop').style.display = 'none'
-    },
-    focus() {
-      this.show()
-    },
-    handleCancel(){
-      this.hide()
-    },
-    handleOk(){
-      this.hide()
+    initSelect () {
+      this.select = new this.Selector(document.getElementById('select'), this.list)
     }
   }
 }
 </script>
 
-<style scoped lang="less">
+<style lang="less">
 .wrapper {
-  .contents {
+  .content {
     width: 80vw;
     height: 5vh;
     border: 1px solid #ff0000;
@@ -153,7 +104,6 @@ export default {
   .panel {
     width: 80vw;
     max-height: 50vh;
-    border: 1px solid #00ff00;
     display: none;
     position: absolute;
     top: 30%;
@@ -161,13 +111,16 @@ export default {
     z-index: 999;
     background: #ffffff;
     margin-left: -40vw;
+    /*padding: 5px 3px;*/
     div {
       position: relative;
     }
     .panel-header {
       height: 32px;
+      padding: 10px 2px 3px 2px;
       input[name='search']{
         width: 98%;
+        height: 21px;
       }
     }
     .panel-content{
@@ -179,6 +132,8 @@ export default {
         padding: 0 10px 0 10px;
         .panel-item{
           text-align: left;
+          height: 24px;
+          border-bottom: 1px solid #ddd;
           .check{
             float: right;
           }
@@ -187,6 +142,10 @@ export default {
     }
     .panel-footer{
       display: flex;
+      padding: 8px 2px 2px 2px;
+      border-top: 1px solid #ddd;
+      height: 25px;
+      background: #ddd;
       div{
         box-sizing: border-box;
       }
