@@ -1,10 +1,7 @@
 <template>
   <div class="hello">
-    <h1>HelloWorld</h1>
-    <select name="" id="" class="wraper">
-      <option value="22">22</option>
-      <option value="22">22fffs</option>
-    </select>
+    <button @click="getValue">获取值</button>
+    <button @click="setValue">设置值</button>
     <div id="select">
     </div>
   </div>
@@ -83,12 +80,17 @@ export default {
   },
   mounted () {
     this.initSelect()
-    this.select.initData()
-    // this.select.initAction()
   },
   methods: {
     initSelect () {
-      this.select = new this.Selector(document.getElementById('select'), this.list)
+      this.select = new this.Selector(document.getElementById('select'), this.list, true)
+    },
+    getValue () {
+      let val = this.select.getValue()
+      console.log(val)
+    },
+    setValue (value) {
+
     }
   }
 }
@@ -96,10 +98,51 @@ export default {
 
 <style lang="less">
 .wrapper {
-  .content {
+  .content-container {
+    position: relative;
     width: 80vw;
-    height: 5vh;
-    border: 1px solid #ff0000;
+    * {
+      box-sizing: border-box;
+    }
+    .content {
+      width: 100%;
+      min-height: 5vh;
+      border: 1px solid #e8e8e8;
+    }
+    ul {
+      position: absolute;
+      width: 100%;
+      list-style: none;
+      top: 0;
+      margin: 0;
+      padding: 4px;
+      li {
+        box-sizing: border-box;
+        background: #fafafa;
+        float: left;
+        height: 24px;
+        margin: 2px 4px;
+        max-width: 45%;
+        border-radius: 3px;
+        position: relative;
+        padding-right: 15px;
+        padding-left: 6px;
+        line-height: 22px;
+        border: 1px solid #e8e8e8;
+        border-radius: 2px;
+        label {
+          position: absolute;
+          color: #f00;
+          right: 4px;
+        }
+        .tag {
+          display: block;
+          overflow:hidden;
+          text-overflow:ellipsis;
+          white-space:nowrap;
+        }
+      }
+    }
   }
   .panel {
     width: 80vw;
@@ -111,7 +154,6 @@ export default {
     z-index: 999;
     background: #ffffff;
     margin-left: -40vw;
-    /*padding: 5px 3px;*/
     div {
       position: relative;
     }
