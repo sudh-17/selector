@@ -19,7 +19,7 @@ function View (dom, multiple = false) {
                 </div>
                 <div class="panel-footer">
                     <div class="bt-gb"><button class="cancel">取消</button></div>
-                    <div class="bt-gb"><button class="ok">确定</button></div>
+                    <div class="bt-gb"><button class="ok btn-primary">确定</button></div>
                 </div>
             </div>
             <div class="backdrop"></div>
@@ -37,6 +37,7 @@ View.prototype.template = function (item) {
     let tmp = `<li class="panel-item" data-id="${item.key}">
             <span>${item.value}</span>
             <input name="item" key="${item.key}" value="${item.value}" class="check" type="${type}" ${item.checked ? 'checked' : ''}>
+            <label class="check-icon"></label>
         </li>`;
     return tmp;
 }

@@ -23,17 +23,6 @@ Model.prototype.search = function (text, multi) {
         return this.data.filter(item => eval(reg).test(item.value))
     }
 }
-/*
-Model.prototype.update = function(items = []){
-    items.forEach(item => {
-        for (let i = 0; i < this.data.length; i++) {
-            if(item.key === this.data[i].key) {
-                this.data[i].checked = item.checked
-                break
-            }
-        }
-    })
-}*/
 Model.prototype.checked = function (key) {
     this.data.forEach(item => {
         if (item.key === key) {
