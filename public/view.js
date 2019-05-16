@@ -134,15 +134,5 @@
         })
     }
 
-    View.prototype.setWidth = function (value) {
-        this.content.style.width = value
-    }
-
-    View.prototype.setHeight = function (value) {
-        if (!this.multiple) {
-            this.content.style.height = value
-        }
-    }
-
     window.View = View
 } (window))
