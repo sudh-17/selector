@@ -35,7 +35,7 @@
         let tmp = `<li class="panel-item" data-id="${item.key}">
                 <span>${item.value}</span>
                 <input name="item" key="${item.key}" value="${item.value}" class="check" type="${type}" ${item.checked ? 'checked' : ''}>
-                <label class="check-icon"></label>
+                <label class="check-icon ${ this.multiple ? 'rect': 'circle' }"></label>
             </li>`
         return tmp
     }

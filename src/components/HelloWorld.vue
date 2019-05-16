@@ -1,5 +1,7 @@
 <template>
   <div class="hello">
+    <img src="../assets/mchecked.png" alt="" srcset="">
+    <img src="../assets/munchecked.png" alt="" srcset="">
     <button @click="getValue">获取值</button>
     <button @click="setValue">设置值</button>
     <div id="select">
