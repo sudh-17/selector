@@ -108,10 +108,12 @@ let qs = function(selector ,parent){
                         <ul class="panel-list">
                         </ul>
                     </div>
-                    <div class="panel-footer">
-                        <div class="bt-gb"><button class="cancel">取消</button></div>
-                        <div class="bt-gb"><button class="ok btn-primary">确定</button></div>
-                    </div>
+                    ${  this.multiple ? 
+                        '<div class="panel-footer"><div class="bt-gb"><button class="cancel">取消</button></div>'
+                        +'<div class="bt-gb"><button class="ok btn-primary">确定</button></div>'
+                        +'</div>'
+                        : ''
+                    }
                 </div>
                 <div class="backdrop"></div>
             </div>`
@@ -125,10 +127,10 @@ let qs = function(selector ,parent){
     
     View.prototype.template = function (item) {
         let type = this.multiple ? 'checkbox' : 'radio'
-        let tmp = `<li class="panel-item" data-id="${item.key}">
-                <span>${item.value}</span>
-                <input name="item" key="${item.key}" value="${item.value}" class="check" type="${type}" ${item.checked ? 'checked' : ''}>
-                <label class="check-icon ${ this.multiple ? 'rect': 'circle' }"></label>
+        let tmp = `<li class="panel-item item-zone" data-id="${item.key}">
+                <span class="item-zone">${item.value}</span>
+                <input class="check item-zone" name="item" key="${item.key}" value="${item.value}" type="${type}" ${item.checked ? 'checked' : ''}>
+                <label class="item-zone check-icon ${ this.multiple ? 'rect': 'circle' }"></label>
             </li>`
         return tmp
     }
@@ -154,7 +156,7 @@ let qs = function(selector ,parent){
     }
     
     View.prototype.tag = function (item) {
-        let tmp = `<li data-id="${ item.key }"><label data-id="${item.key}">X</label><span class="tag" title="${item.value}">${item.value}</span></li>`
+        let tmp = `<li class="tag" data-id="${ item.key }"><label data-id="${item.key}">X</label><span class="tag" title="${item.value}">${item.value}</span></li>`
         return tmp
     }
     
@@ -163,7 +165,7 @@ let qs = function(selector ,parent){
     }
     
     View.prototype.removeTag = function (key) {
-        let el = qs('[data-id="' + key + '"]')
+        let el = qs('.tag[data-id="' + key + '"]')
         this.content.removeChild(el)
     }
     
@@ -227,6 +229,30 @@ let qs = function(selector ,parent){
         })
     }
 
+    View.prototype.itemAction = function (callback) {
+        let self = this
+        $delegated(this.list, '.item-zone', 'click', function(e) {
+            let dom = null
+            let el = e.target
+            if (el.tagName === 'LI') {
+                dom = el
+            } else {
+                dom = el.parentNode
+                
+            }
+            let btnCheck = qs('input[name="item"]', dom)
+            if (self.multiple) {
+                btnCheck.checked = !btnCheck.checked
+            } else {
+                if (!btnCheck.checked) {
+                    btnCheck.checked = !btnCheck.checked
+                    let val = qs('span', dom).innerHTML
+                    callback.call(this, dom.getAttribute('data-id'), val)
+                }
+            }
+        })
+    }
+
     View.prototype.setWidth = function (value) {
         this.content.style.width = value
     }
@@ -287,6 +313,11 @@ let qs = function(selector ,parent){
       this.view.tagAction(function (id) {
         self.view.removeTag(id)
         self.model.unChecked(id)
+      })
+      this.view.itemAction(function (key, value) {
+        self.model.checked(key)
+        self.view.setValue(value)
+        self.view.modal('hide')
       })
     }
     
