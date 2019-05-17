@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import Table1 from './components/Table1.vue'
+import Table1 from './components/selector/Selector.vue'
 
 export default {
   name: 'app',
